@@ -4569,7 +4569,6 @@
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:avg_replies_per_buyer:qk]&quot;' value='Average Number of Replies per Buyer' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:avg_revenue_per_paying_user:qk]&quot;' value='Average Revenue per Paying User' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:buyside_conversion:qk]&quot;' value='Buy-side Conversion ' />
-          <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:Calculation_1210419134024264:qk]&quot;' value='Replies to Healthy Liquid Listings  ' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:Calculation_1921348227776872448:qk]&quot;' value='Unique Listers ' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:Calculation_2310415154442812:qk]&quot;' value='  ' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_active_users:qk]&quot;' value='Active Users' />
@@ -4580,13 +4579,12 @@
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_net_new_listings:qk]&quot;' value='Net New Listings' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_paying_listers:qk]&quot;' value='Unique Paying Listers' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_replies:qk]&quot;' value='Unique Replies' />
+          <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:replies_to_healthy_liquid:qk]&quot;' value='Replies to Healthy Liquid Listings  ' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:revenue:qk]&quot;' value='Net Revenue (USD)' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:sellside_conversion:qk]&quot;' value='Sell-side Conversion ' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:avg_listings_per_lister:qk]&quot;' value='Average Number of Listings per Lister ' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:buyside_conversion:qk]&quot;' value='Buy-side Conversion' />
-          <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:Calculation_1210419134024264:qk]&quot;' value='Replies to Healthy Liquid Listings ' />
           <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:sellside_conversion:qk]&quot;' value='Sell-side Conversion' />
-          <alias key='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[usr:Calculation_1210419134024264:qk]&quot;' value='Replies to Healthy Liquid Listings' />
         </aliases>
       </column>
       <column caption='avg_revenue_per_paying_user_compare_perc' datatype='real' default-format='p0.0%' name='[ARPPU_compare_abs (copy)]' role='measure' type='quantitative'>
@@ -4613,14 +4611,8 @@
       <column caption='LIQ_Measured_Value' datatype='real' name='[Calculation_0970412163003794]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='CASE [Parameters].[Number of periods (copy)] &#9;&#13;&#10;    WHEN &quot;Listing Liquidity&quot; THEN [listing_liquidity]&#13;&#10;    WHEN &quot;Liquid Listings&quot;   THEN [no_liquid_listings]&#13;&#10;    WHEN &quot;Lister Liquidity&quot;  THEN [lister_liquidity]&#13;&#10;    WHEN &quot;Liquid Listers&quot;    THEN [no_liquid_listers]&#13;&#10;END' />
       </column>
-      <column caption='RDIF_Replies_Buyers' datatype='real' default-format='p0.0%' name='[Calculation_1210419134024264]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='[no_liquid_replies]/[no_replies]' />
-      </column>
       <column caption='null_field' datatype='real' name='[Calculation_1295629356994838529]' role='dimension' type='ordinal'>
         <calculation class='tableau' formula='FLOAT(NULL)' />
-      </column>
-      <column caption='Category_L1_SegmentFilter' datatype='integer' name='[Calculation_1829868862517145601]' role='dimension' type='ordinal'>
-        <calculation class='tableau' formula='IF [Parameters].[Overview_Slicer_par (copy 2)] &lt;&gt; &apos;Category L1&apos;      THEN [category_l1_id] ELSE 0 END' />
       </column>
       <column caption='Country_SegmentFilter' datatype='string' name='[Calculation_1829868862518222850]' role='dimension' type='nominal'>
         <calculation class='tableau' formula='IF [Parameters].[Overview_Slicer_par (copy 2)] = &apos;Country&apos; THEN &apos;Poland&apos; ELSE [country_name] END' />
@@ -4778,8 +4770,8 @@
       <column caption='REV_Measured_Value_target_Format' datatype='string' name='[PSV_Measured_Value_f (copy)]' role='dimension' type='nominal'>
         <calculation class='tableau' formula='CASE [Parameters].[HSV_Metric (copy 2)] &#9;&#13;&#10;    WHEN &quot;Revenue&quot;                          THEN [revenue_target_format]                                         &#13;&#10;    WHEN &quot;Active users&quot;                     THEN [no_active_users_target_format]                                &#13;&#10;    WHEN &quot;Monetization rate&quot;                THEN [monetization_rate_target_format]                                              &#13;&#10;    WHEN &quot;Paying users&quot;                     THEN [no_paying_listers_target_format]                             &#13;&#10;    WHEN &quot;Average revenue per user&quot;         THEN [avg_revenue_per_paying_user_target_format]                    &#13;&#10;END' />
       </column>
-      <column caption='RDIF_Replies_Buyers_compare_perc' datatype='real' default-format='p0.0%' name='[RDIF_Replies_NNL (copy 2)]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='[Calculation_1210419134024264]/&#13;&#10;IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [no_liquid_replies_target]/[no_replies_target]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [no_liquid_replies_lag]/[no_replies_lag]&#13;&#10;END&#13;&#10;-1' />
+      <column caption='replies_to_healthy_liquid_compare_perc' datatype='real' default-format='p0.0%' name='[RDIF_Replies_NNL (copy 2)]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [replies_to_healthy_liquid_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [replies_to_healthy_liquid_lag_diff_perc]&#13;&#10;END' />
       </column>
       <column caption='Lister_First_Segment_Filter' datatype='string' name='[Region_Segment_Filter (copy) (copy 2)]' role='dimension' type='nominal'>
         <calculation class='tableau' formula='IF [Parameters].[Overview_Slicer_par (copy 2)] = &apos;First/Repeat lister&apos;   THEN &apos;Total&apos; ELSE [lister_first_status_name] END' />
@@ -5028,6 +5020,11 @@
       <column caption='Perspective Id' datatype='integer' name='[perspective_id]' role='dimension' type='ordinal' />
       <column caption='Platform Name' datatype='string' name='[platform_name]' role='dimension' type='nominal' />
       <column caption='Region Name' datatype='string' name='[region_name]' role='dimension' type='nominal' />
+      <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid]' role='measure' type='quantitative' />
+      <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_lag]' role='measure' type='quantitative' />
+      <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_lag_diff_perc]' role='measure' type='quantitative' />
+      <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_target]' role='measure' type='quantitative' />
+      <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_target_diff_perc]' role='measure' type='quantitative' />
       <column caption='Reply Category Label' datatype='string' name='[reply_category_label]' role='dimension' type='nominal' />
       <column caption='Reply Category Name' datatype='string' name='[reply_category_name]' role='dimension' type='nominal' />
       <column caption='Revenue' datatype='real' name='[revenue]' role='measure' type='quantitative' />
@@ -5054,7 +5051,6 @@
       <column caption='Sellside Conversion Target Format' datatype='string' name='[sellside_conversion_target_format]' role='dimension' type='nominal' />
       <column caption='Vertical L1 Name' datatype='string' name='[vertical_l1_name]' role='dimension' type='nominal' />
       <column caption='Vertical L2 Name' datatype='string' name='[vertical_l2_name]' role='dimension' type='nominal' />
-      <column-instance column='[Calculation_1210419134024264]' derivation='Attribute' name='[attr:Calculation_1210419134024264:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_1921348227776872448]' derivation='Attribute' name='[attr:Calculation_1921348227776872448:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_2310415154442812]' derivation='Attribute' name='[attr:Calculation_2310415154442812:qk]' pivot='key' type='quantitative' />
       <column-instance column='[avg_replies_per_buyer]' derivation='Attribute' name='[attr:avg_replies_per_buyer:qk]' pivot='key' type='quantitative' />
@@ -5068,13 +5064,13 @@
       <column-instance column='[no_net_new_listings]' derivation='Attribute' name='[attr:no_net_new_listings:qk]' pivot='key' type='quantitative' />
       <column-instance column='[no_paying_listers]' derivation='Attribute' name='[attr:no_paying_listers:qk]' pivot='key' type='quantitative' />
       <column-instance column='[no_replies]' derivation='Attribute' name='[attr:no_replies:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[replies_to_healthy_liquid]' derivation='Attribute' name='[attr:replies_to_healthy_liquid:qk]' pivot='key' type='quantitative' />
       <column-instance column='[revenue]' derivation='Attribute' name='[attr:revenue:qk]' pivot='key' type='quantitative' />
       <column-instance column='[sellside_conversion]' derivation='Attribute' name='[attr:sellside_conversion:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_2310415154442812]' derivation='None' name='[none:Calculation_2310415154442812:ok]' pivot='key' type='ordinal' />
       <column-instance column='[Overview_Slicer (copy 2)]' derivation='None' name='[none:Overview_Slicer (copy 2):nk]' pivot='key' type='nominal' />
       <column-instance column='[forecast_yn]' derivation='None' name='[none:forecast_yn:nk]' pivot='key' type='nominal' />
       <column-instance column='[Calculation_0970412163003794]' derivation='Sum' name='[sum:Calculation_0970412163003794:qk]' pivot='key' type='quantitative' />
-      <column-instance column='[Calculation_1210419134024264]' derivation='Sum' name='[sum:Calculation_1210419134024264:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_3680412173341265]' derivation='Sum' name='[sum:Calculation_3680412173341265:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_7780412174044169]' derivation='Sum' name='[sum:Calculation_7780412174044169:qk]' pivot='key' type='quantitative' />
       <column-instance column='[ESV_Measured_Value (copy)]' derivation='Sum' name='[sum:ESV_Measured_Value (copy):qk]' pivot='key' type='quantitative' />
@@ -5085,7 +5081,6 @@
       <column-instance column='[sellside_conversion]' derivation='Sum' name='[sum:sellside_conversion:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_0970412163003794]' derivation='User' name='[usr:Calculation_0970412163003794:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_0970412163003794]' derivation='User' name='[usr:Calculation_0970412163003794:vtsum:qk]' pivot='key' type='quantitative' visual-totals='Sum' />
-      <column-instance column='[Calculation_1210419134024264]' derivation='User' name='[usr:Calculation_1210419134024264:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_3680412173341265]' derivation='User' name='[usr:Calculation_3680412173341265:qk]' pivot='key' type='quantitative' />
       <column-instance column='[Calculation_7780412174044169]' derivation='User' name='[usr:Calculation_7780412174044169:qk]' pivot='key' type='quantitative' />
       <column-instance column='[ESV_Measured_Value (copy)]' derivation='User' name='[usr:ESV_Measured_Value (copy):qk]' pivot='key' type='quantitative' />
@@ -5152,7 +5147,6 @@
         <folder-item name='[buyside_conversion_target_format]' type='field' />
       </folder>
       <folder name='Category' role='dimensions'>
-        <folder-item name='[Calculation_1829868862517145601]' type='field' />
         <folder-item name='[Region_Segment_Filter (copy)]' type='field' />
         <folder-item name='[vertical_l1_name]' type='field' />
         <folder-item name='[vertical_l2_name]' type='field' />
@@ -5287,6 +5281,10 @@
         <folder-item name='[PSV_Measured_Value (copy 2)]' type='field' />
         <folder-item name='[PSV_Measured_Value_Compare_Abs (copy 2)]' type='field' />
         <folder-item name='[PSV_Measured_Value_f (copy)]' type='field' />
+      </folder>
+      <folder name='Overview' role='dimensions'>
+        <folder-item name='[Calculation_4090414123821101]' type='field' />
+        <folder-item name='[Overview_Slicer (copy)]' type='field' />
       </folder>
       <folder name='Replies to Healthy Liquid Listings' role='dimensions'>
         <folder-item name='[replies_to_healthy_liquid_format]' type='field' />
@@ -5505,8 +5503,14 @@
         <folder-item name='[PSV_Measured_Value_Compare_Abs (copy)]' type='field' />
       </folder>
       <folder name='Replies to Healthy Liquid Listings' role='measures'>
-        <folder-item name='[Calculation_1210419134024264]' type='field' />
         <folder-item name='[RDIF_Replies_NNL (copy 2)]' type='field' />
+        <folder-item name='[replies_to_healthy_liquid]' type='field' />
+        <folder-item name='[replies_to_healthy_liquid_lag]' type='field' />
+        <folder-item name='[replies_to_healthy_liquid_lag_diff]' type='field' />
+        <folder-item name='[replies_to_healthy_liquid_lag_diff_perc]' type='field' />
+        <folder-item name='[replies_to_healthy_liquid_target]' type='field' />
+        <folder-item name='[replies_to_healthy_liquid_target_diff]' type='field' />
+        <folder-item name='[replies_to_healthy_liquid_target_diff_perc]' type='field' />
       </folder>
       <folder name='Revenue' role='measures'>
         <folder-item name='[Revenue_compare_perc (copy)]' type='field' />
@@ -5539,7 +5543,7 @@
         <folder-item name='[WorldView_bubble_color_value (copy)]' type='field' />
         <folder-item name='[WorldView_bubble_p_size_value (copy)]' type='field' />
       </folder>
-      <layout dim-ordering='alphabetic' dim-percentage='0.788913' measure-ordering='alphabetic' measure-percentage='0.170576' parameter-percentage='0.0405117' show-structure='false' user-set-layout='true' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.157783' measure-ordering='alphabetic' measure-percentage='0.801706' parameter-percentage='0.0405117' show-structure='false' user-set-layout='true' />
       <style>
         <style-rule element='mark'>
           <encoding attr='color' field='[:Measure Names]' type='palette'>
@@ -13647,10 +13651,6 @@
             <datasource caption='Reporting Cube' name='redshift.0pmlpog0qxywzw13ap5j21d5qj19' />
           </datasources>
           <datasource-dependencies datasource='redshift.0pmlpog0qxywzw13ap5j21d5qj19'>
-            <column caption='RDIF_Replies_Buyers' datatype='real' default-format='p0.0%' name='[Calculation_1210419134024264]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[no_liquid_replies]/[no_replies]' />
-            </column>
-            <column-instance column='[Calculation_1210419134024264]' derivation='Attribute' name='[attr:Calculation_1210419134024264:qk]' pivot='key' type='quantitative' />
             <column-instance column='[avg_replies_per_buyer]' derivation='Attribute' name='[attr:avg_replies_per_buyer:qk]' pivot='key' type='quantitative' />
             <column-instance column='[buyside_conversion]' derivation='Attribute' name='[attr:buyside_conversion:qk]' pivot='key' type='quantitative' />
             <column-instance column='[lister_liquidity]' derivation='Attribute' name='[attr:lister_liquidity:qk]' pivot='key' type='quantitative' />
@@ -13660,16 +13660,17 @@
             <column-instance column='[no_listers]' derivation='Attribute' name='[attr:no_listers:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_net_new_listings]' derivation='Attribute' name='[attr:no_net_new_listings:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_replies]' derivation='Attribute' name='[attr:no_replies:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[replies_to_healthy_liquid]' derivation='Attribute' name='[attr:replies_to_healthy_liquid:qk]' pivot='key' type='quantitative' />
             <column caption='Avg Replies Per Buyer' datatype='real' default-format='n#,##0.0;-#,##0.0' name='[avg_replies_per_buyer]' role='measure' type='quantitative' />
             <column caption='Buyside Conversion' datatype='real' default-format='p0.0%' name='[buyside_conversion]' role='measure' type='quantitative' />
             <column caption='Lister Liquidity' datatype='real' default-format='p0.0%' name='[lister_liquidity]' role='measure' type='quantitative' />
             <column caption='No Active Users' datatype='integer' name='[no_active_users]' role='measure' type='quantitative' />
             <column caption='No Buyers' datatype='integer' name='[no_buyers]' role='measure' type='quantitative' />
             <column caption='No Liquid Listers' datatype='integer' name='[no_liquid_listers]' role='measure' type='quantitative' />
-            <column caption='No Liquid Replies' datatype='integer' name='[no_liquid_replies]' role='measure' type='quantitative' />
             <column caption='No Listers' datatype='integer' name='[no_listers]' role='measure' type='quantitative' />
             <column caption='No Net New Listings' datatype='integer' name='[no_net_new_listings]' role='measure' type='quantitative' />
             <column caption='No Replies' datatype='integer' name='[no_replies]' role='measure' type='quantitative' />
+            <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid]' role='measure' type='quantitative' />
           </datasource-dependencies>
           <filter class='categorical' column='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[:Measure Names]'>
             <groupfilter function='union' user:op='manual'>
@@ -13677,7 +13678,7 @@
               <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_listers:qk]&quot;' />
               <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:lister_liquidity:qk]&quot;' />
               <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_net_new_listings:qk]&quot;' />
-              <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:Calculation_1210419134024264:qk]&quot;' />
+              <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:replies_to_healthy_liquid:qk]&quot;' />
               <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_replies:qk]&quot;' />
               <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:avg_replies_per_buyer:qk]&quot;' />
               <groupfilter function='member' level='[:Measure Names]' member='&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_buyers:qk]&quot;' />
@@ -13691,7 +13692,7 @@
               <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_listers:qk]&quot;</bucket>
               <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:lister_liquidity:qk]&quot;</bucket>
               <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_net_new_listings:qk]&quot;</bucket>
-              <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:Calculation_1210419134024264:qk]&quot;</bucket>
+              <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:replies_to_healthy_liquid:qk]&quot;</bucket>
               <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_replies:qk]&quot;</bucket>
               <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:avg_replies_per_buyer:qk]&quot;</bucket>
               <bucket>&quot;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:no_buyers:qk]&quot;</bucket>
@@ -13823,9 +13824,6 @@
             </column>
           </datasource-dependencies>
           <datasource-dependencies datasource='redshift.0pmlpog0qxywzw13ap5j21d5qj19'>
-            <column caption='RDIF_Replies_Buyers' datatype='real' default-format='p0.0%' name='[Calculation_1210419134024264]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[no_liquid_replies]/[no_replies]' />
-            </column>
             <column caption='1' datatype='real' name='[Calculation_2310415154442812]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='1.0' />
             </column>
@@ -13853,7 +13851,6 @@
             <column caption='No Buyers Format' datatype='string' name='[no_buyers_format]' role='dimension' type='nominal' />
             <column caption='No Liquid Listers' datatype='integer' name='[no_liquid_listers]' role='measure' type='quantitative' />
             <column caption='No Liquid Listers Format' datatype='string' name='[no_liquid_listers_format]' role='dimension' type='nominal' />
-            <column caption='No Liquid Replies' datatype='integer' name='[no_liquid_replies]' role='measure' type='quantitative' />
             <column caption='No Listers' datatype='integer' name='[no_listers]' role='measure' type='quantitative' />
             <column caption='No Listers Format' datatype='string' name='[no_listers_format]' role='dimension' type='nominal' />
             <column caption='No Net New Listings' datatype='integer' name='[no_net_new_listings]' role='measure' type='quantitative' />
@@ -13880,8 +13877,8 @@
             <column-instance column='[vertical_l1_name]' derivation='None' name='[none:vertical_l1_name:nk]' pivot='key' type='nominal' />
             <column caption='Perspective Id' datatype='integer' name='[perspective_id]' role='dimension' type='ordinal' />
             <column caption='Region Name' datatype='string' name='[region_name]' role='dimension' type='nominal' />
+            <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid]' role='measure' type='quantitative' />
             <column caption='Reply Category Name' datatype='string' name='[reply_category_name]' role='dimension' type='nominal' />
-            <column-instance column='[Calculation_1210419134024264]' derivation='Sum' name='[sum:Calculation_1210419134024264:qk]' pivot='key' type='quantitative' />
             <column-instance column='[Calculation_2310415154442812]' derivation='Sum' name='[sum:Calculation_2310415154442812:qk]' pivot='key' type='quantitative' />
             <column-instance column='[buyside_conversion]' derivation='Sum' name='[sum:buyside_conversion:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_active_users]' derivation='Sum' name='[sum:no_active_users:qk]' pivot='key' type='quantitative' />
@@ -13890,6 +13887,7 @@
             <column-instance column='[no_listers]' derivation='Sum' name='[sum:no_listers:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_net_new_listings]' derivation='Sum' name='[sum:no_net_new_listings:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_replies]' derivation='Sum' name='[sum:no_replies:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[replies_to_healthy_liquid]' derivation='Sum' name='[sum:replies_to_healthy_liquid:qk]' pivot='key' type='quantitative' />
             <column caption='Vertical L1 Name' datatype='string' name='[vertical_l1_name]' role='dimension' type='nominal' />
           </datasource-dependencies>
           <filter class='categorical' column='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[none:Calculation_8400412165455057:nk]' filter-group='6'>
@@ -14094,11 +14092,12 @@
             </view>
             <mark class='Text' />
             <encodings>
-              <text column='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:Calculation_1210419134024264:qk]' />
+              <text column='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:replies_to_healthy_liquid:qk]' />
             </encodings>
             <customized-tooltip>
               <formatted-text>
-                <run fontcolor='#787878'>Replies to Healthy Liquid Listings:&#9;</run>
+                <run fontcolor='#787878'>Replies to Healthy Liquid Listings: </run>
+                <run bold='true'>&lt;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:replies_to_healthy_liquid:qk]&gt;&#9;</run>
                 <run fontcolor='#787878'>Æ&#10;</run>
               </formatted-text>
             </customized-tooltip>
@@ -14412,9 +14411,6 @@
             <column caption='buyside_conversion_compare_perc' datatype='real' default-format='p0.0%' name='[Active_user_compare_perc (copy)]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [buyside_conversion_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [buyside_conversion_lag_diff_perc]&#13;&#10;END' />
             </column>
-            <column caption='RDIF_Replies_Buyers' datatype='real' default-format='p0.0%' name='[Calculation_1210419134024264]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[no_liquid_replies]/[no_replies]' />
-            </column>
             <column aggregation='Sum' caption='Perspective_string_to_dim' datatype='integer' name='[Calculation_7960429134058745]' role='dimension' type='ordinal'>
               <calculation class='tableau' formula='CASE [Parameters].[WorldView_bubble_size_metric (copy)] &#13;&#10;    WHEN &quot;day&quot;                       THEN 1&#13;&#10;    WHEN &quot;week&quot;                      THEN 2&#13;&#10;    WHEN &quot;month&quot;                     THEN 3&#13;&#10;    WHEN &quot;year&quot;                      THEN 4&#13;&#10;    WHEN &quot;year to date&quot;              THEN 5&#13;&#10;END' />
             </column>
@@ -14436,8 +14432,8 @@
             <column caption='Lister_liquidity_compare_perc' datatype='real' default-format='p0.0%' name='[Listing_liquidity_compare_perc (copy)]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [lister_liquidity_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [lister_liquidity_lag_diff_perc]&#13;&#10;END' />
             </column>
-            <column caption='RDIF_Replies_Buyers_compare_perc' datatype='real' default-format='p0.0%' name='[RDIF_Replies_NNL (copy 2)]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[Calculation_1210419134024264]/&#13;&#10;IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [no_liquid_replies_target]/[no_replies_target]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [no_liquid_replies_lag]/[no_replies_lag]&#13;&#10;END&#13;&#10;-1' />
+            <column caption='replies_to_healthy_liquid_compare_perc' datatype='real' default-format='p0.0%' name='[RDIF_Replies_NNL (copy 2)]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [replies_to_healthy_liquid_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [replies_to_healthy_liquid_lag_diff_perc]&#13;&#10;END' />
             </column>
             <column caption='no_buyers_compare_perc' datatype='real' default-format='p0.0%' name='[Replies_compare_perc (copy 3)]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [no_buyers_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [no_buyers_lag_diff_perc]&#13;&#10;END' />
@@ -14464,17 +14460,11 @@
             <column caption='No Buyers Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_buyers_target_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Liquid Listers Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_liquid_listers_lag_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Liquid Listers Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_liquid_listers_target_diff_perc]' role='measure' type='quantitative' />
-            <column caption='No Liquid Replies' datatype='integer' name='[no_liquid_replies]' role='measure' type='quantitative' />
-            <column caption='No Liquid Replies Lag' datatype='integer' name='[no_liquid_replies_lag]' role='measure' type='quantitative' />
-            <column caption='No Liquid Replies Target' datatype='integer' name='[no_liquid_replies_target]' role='measure' type='quantitative' />
             <column caption='No Listers Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_listers_lag_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Listers Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_listers_target_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Net New Listings Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_net_new_listings_lag_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Net New Listings Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_net_new_listings_target_diff_perc]' role='measure' type='quantitative' />
-            <column caption='No Replies' datatype='integer' name='[no_replies]' role='measure' type='quantitative' />
-            <column caption='No Replies Lag' datatype='integer' name='[no_replies_lag]' role='measure' type='quantitative' />
             <column caption='No Replies Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_replies_lag_diff_perc]' role='measure' type='quantitative' />
-            <column caption='No Replies Target' datatype='integer' name='[no_replies_target]' role='measure' type='quantitative' />
             <column caption='No Replies Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_replies_target_diff_perc]' role='measure' type='quantitative' />
             <column-instance column='[Calculation_8400412165455057]' derivation='None' name='[none:Calculation_8400412165455057:nk]' pivot='key' type='nominal' />
             <column-instance column='[channel_l1_name]' derivation='None' name='[none:channel_l1_name:nk]' pivot='key' type='nominal' />
@@ -14489,6 +14479,8 @@
             <column-instance column='[vertical_l1_name]' derivation='None' name='[none:vertical_l1_name:nk]' pivot='key' type='nominal' />
             <column caption='Perspective Id' datatype='integer' name='[perspective_id]' role='dimension' type='ordinal' />
             <column caption='Region Name' datatype='string' name='[region_name]' role='dimension' type='nominal' />
+            <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_lag_diff_perc]' role='measure' type='quantitative' />
+            <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_target_diff_perc]' role='measure' type='quantitative' />
             <column caption='Reply Category Name' datatype='string' name='[reply_category_name]' role='dimension' type='nominal' />
             <column-instance column='[ARpB (copy)]' derivation='Sum' name='[sum:ARpB (copy):qk]' pivot='key' type='quantitative' />
             <column-instance column='[Active_user_compare_perc (copy)]' derivation='Sum' name='[sum:Active_user_compare_perc (copy):qk]' pivot='key' type='quantitative' />
@@ -14635,8 +14627,7 @@
             </encodings>
             <customized-tooltip>
               <formatted-text>
-                <run fontcolor='#787878'>Date:&#9;</run>
-                <run fontcolor='#787878'>&#10;Delta%:&#9;</run>
+                <run fontcolor='#787878'>Date:&#9;&#10;Delta%:&#9;</run>
                 <run bold='true'>&lt;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[Multiple Values]&gt;</run>
               </formatted-text>
             </customized-tooltip>
@@ -14748,6 +14739,7 @@
             <text x='0.5' y='0.5' />
           </annotation>
         </annotations>
+        <tooltip-style tooltip-mode='none' />
       </table>
     </worksheet>
     <worksheet name='4. HD.3 DeltaValues'>
@@ -14785,9 +14777,6 @@
             <column caption='buyside_conversion_compare_perc' datatype='real' default-format='p0.0%' name='[Active_user_compare_perc (copy)]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [buyside_conversion_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [buyside_conversion_lag_diff_perc]&#13;&#10;END' />
             </column>
-            <column caption='RDIF_Replies_Buyers' datatype='real' default-format='p0.0%' name='[Calculation_1210419134024264]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[no_liquid_replies]/[no_replies]' />
-            </column>
             <column aggregation='Sum' caption='Perspective_string_to_dim' datatype='integer' name='[Calculation_7960429134058745]' role='dimension' type='ordinal'>
               <calculation class='tableau' formula='CASE [Parameters].[WorldView_bubble_size_metric (copy)] &#13;&#10;    WHEN &quot;day&quot;                       THEN 1&#13;&#10;    WHEN &quot;week&quot;                      THEN 2&#13;&#10;    WHEN &quot;month&quot;                     THEN 3&#13;&#10;    WHEN &quot;year&quot;                      THEN 4&#13;&#10;    WHEN &quot;year to date&quot;              THEN 5&#13;&#10;END' />
             </column>
@@ -14809,8 +14798,8 @@
             <column caption='Lister_liquidity_compare_perc' datatype='real' default-format='p0.0%' name='[Listing_liquidity_compare_perc (copy)]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [lister_liquidity_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [lister_liquidity_lag_diff_perc]&#13;&#10;END' />
             </column>
-            <column caption='RDIF_Replies_Buyers_compare_perc' datatype='real' default-format='p0.0%' name='[RDIF_Replies_NNL (copy 2)]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[Calculation_1210419134024264]/&#13;&#10;IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [no_liquid_replies_target]/[no_replies_target]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [no_liquid_replies_lag]/[no_replies_lag]&#13;&#10;END&#13;&#10;-1' />
+            <column caption='replies_to_healthy_liquid_compare_perc' datatype='real' default-format='p0.0%' name='[RDIF_Replies_NNL (copy 2)]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [replies_to_healthy_liquid_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [replies_to_healthy_liquid_lag_diff_perc]&#13;&#10;END' />
             </column>
             <column caption='no_buyers_compare_perc' datatype='real' default-format='p0.0%' name='[Replies_compare_perc (copy 3)]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='IF [Parameters].[Performance_view_roll (copy)] = &quot;Target&quot;                     THEN [no_buyers_target_diff_perc]&#13;&#10;ELSEIF [Parameters].[Performance_view_roll (copy)] = &quot;Previous Period&quot;        THEN [no_buyers_lag_diff_perc]&#13;&#10;END' />
@@ -14837,17 +14826,11 @@
             <column caption='No Buyers Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_buyers_target_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Liquid Listers Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_liquid_listers_lag_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Liquid Listers Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_liquid_listers_target_diff_perc]' role='measure' type='quantitative' />
-            <column caption='No Liquid Replies' datatype='integer' name='[no_liquid_replies]' role='measure' type='quantitative' />
-            <column caption='No Liquid Replies Lag' datatype='integer' name='[no_liquid_replies_lag]' role='measure' type='quantitative' />
-            <column caption='No Liquid Replies Target' datatype='integer' name='[no_liquid_replies_target]' role='measure' type='quantitative' />
             <column caption='No Listers Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_listers_lag_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Listers Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_listers_target_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Net New Listings Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_net_new_listings_lag_diff_perc]' role='measure' type='quantitative' />
             <column caption='No Net New Listings Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_net_new_listings_target_diff_perc]' role='measure' type='quantitative' />
-            <column caption='No Replies' datatype='integer' name='[no_replies]' role='measure' type='quantitative' />
-            <column caption='No Replies Lag' datatype='integer' name='[no_replies_lag]' role='measure' type='quantitative' />
             <column caption='No Replies Lag Diff Perc' datatype='real' default-format='p0.0%' name='[no_replies_lag_diff_perc]' role='measure' type='quantitative' />
-            <column caption='No Replies Target' datatype='integer' name='[no_replies_target]' role='measure' type='quantitative' />
             <column caption='No Replies Target Diff Perc' datatype='real' default-format='p0.0%' name='[no_replies_target_diff_perc]' role='measure' type='quantitative' />
             <column-instance column='[Calculation_8400412165455057]' derivation='None' name='[none:Calculation_8400412165455057:nk]' pivot='key' type='nominal' />
             <column-instance column='[channel_l1_name]' derivation='None' name='[none:channel_l1_name:nk]' pivot='key' type='nominal' />
@@ -14862,6 +14845,8 @@
             <column-instance column='[vertical_l1_name]' derivation='None' name='[none:vertical_l1_name:nk]' pivot='key' type='nominal' />
             <column caption='Perspective Id' datatype='integer' name='[perspective_id]' role='dimension' type='ordinal' />
             <column caption='Region Name' datatype='string' name='[region_name]' role='dimension' type='nominal' />
+            <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_lag_diff_perc]' role='measure' type='quantitative' />
+            <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid_target_diff_perc]' role='measure' type='quantitative' />
             <column caption='Reply Category Name' datatype='string' name='[reply_category_name]' role='dimension' type='nominal' />
             <column-instance column='[ARpB (copy)]' derivation='Sum' name='[sum:ARpB (copy):qk]' pivot='key' type='quantitative' />
             <column-instance column='[Active_user_compare_perc (copy)]' derivation='Sum' name='[sum:Active_user_compare_perc (copy):qk]' pivot='key' type='quantitative' />
@@ -15131,9 +15116,6 @@
             </column>
           </datasource-dependencies>
           <datasource-dependencies datasource='redshift.0pmlpog0qxywzw13ap5j21d5qj19'>
-            <column caption='RDIF_Replies_Buyers' datatype='real' default-format='p0.0%' name='[Calculation_1210419134024264]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[no_liquid_replies]/[no_replies]' />
-            </column>
             <column aggregation='Sum' caption='Perspective_string_to_dim' datatype='integer' name='[Calculation_7960429134058745]' role='dimension' type='ordinal'>
               <calculation class='tableau' formula='CASE [Parameters].[WorldView_bubble_size_metric (copy)] &#13;&#10;    WHEN &quot;day&quot;                       THEN 1&#13;&#10;    WHEN &quot;week&quot;                      THEN 2&#13;&#10;    WHEN &quot;month&quot;                     THEN 3&#13;&#10;    WHEN &quot;year&quot;                      THEN 4&#13;&#10;    WHEN &quot;year to date&quot;              THEN 5&#13;&#10;END' />
             </column>
@@ -15166,7 +15148,6 @@
             <column caption='No Buyers Format' datatype='string' name='[no_buyers_format]' role='dimension' type='nominal' />
             <column caption='No Liquid Listers' datatype='integer' name='[no_liquid_listers]' role='measure' type='quantitative' />
             <column caption='No Liquid Listers Format' datatype='string' name='[no_liquid_listers_format]' role='dimension' type='nominal' />
-            <column caption='No Liquid Replies' datatype='integer' name='[no_liquid_replies]' role='measure' type='quantitative' />
             <column caption='No Listers' datatype='integer' name='[no_listers]' role='measure' type='quantitative' />
             <column caption='No Listers Format' datatype='string' name='[no_listers_format]' role='dimension' type='nominal' />
             <column caption='No Net New Listings' datatype='integer' name='[no_net_new_listings]' role='measure' type='quantitative' />
@@ -15188,14 +15169,15 @@
             <column caption='Period Label' datatype='string' name='[period_label]' role='dimension' type='nominal' />
             <column caption='Perspective Id' datatype='integer' name='[perspective_id]' role='dimension' type='ordinal' />
             <column caption='Region Name' datatype='string' name='[region_name]' role='dimension' type='nominal' />
+            <column datatype='real' default-format='p0.0%' name='[replies_to_healthy_liquid]' role='measure' type='quantitative' />
             <column caption='Reply Category Name' datatype='string' name='[reply_category_name]' role='dimension' type='nominal' />
-            <column-instance column='[Calculation_1210419134024264]' derivation='Sum' name='[sum:Calculation_1210419134024264:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_active_users]' derivation='Sum' name='[sum:no_active_users:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_buyers]' derivation='Sum' name='[sum:no_buyers:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_liquid_listers]' derivation='Sum' name='[sum:no_liquid_listers:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_listers]' derivation='Sum' name='[sum:no_listers:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_net_new_listings]' derivation='Sum' name='[sum:no_net_new_listings:qk]' pivot='key' type='quantitative' />
             <column-instance column='[no_replies]' derivation='Sum' name='[sum:no_replies:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[replies_to_healthy_liquid]' derivation='Sum' name='[sum:replies_to_healthy_liquid:qk]' pivot='key' type='quantitative' />
             <column caption='Vertical L1 Name' datatype='string' name='[vertical_l1_name]' role='dimension' type='nominal' />
           </datasource-dependencies>
           <filter class='categorical' column='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[none:Date_period_start (copy):nk]' filter-group='12'>
@@ -15284,7 +15266,6 @@
             <encoding attr='space' class='0' domain-expand='false' field='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:lister_liquidity:qk]' field-type='quantitative' scope='rows' type='space' />
             <format attr='subtitle' class='0' field='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:lister_liquidity:qk]' scope='rows' value='' />
             <format attr='auto-subtitle' class='0' field='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:lister_liquidity:qk]' scope='rows' value='true' />
-            <format attr='display' class='0' field='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:Calculation_1210419134024264:qk]' scope='rows' value='false' />
           </style-rule>
           <style-rule element='cell'>
             <format attr='text-format' field='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_listers:qk]' value='n#,##0,,.0M;-#,##0,,.0M' />
@@ -15454,7 +15435,7 @@
               </style-rule>
             </style>
           </pane>
-          <pane id='11' y-axis-name='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:Calculation_1210419134024264:qk]'>
+          <pane id='11' y-axis-name='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:replies_to_healthy_liquid:qk]'>
             <view>
               <breakdown value='auto' />
             </view>
@@ -15467,7 +15448,7 @@
                 <run fontcolor='#787878'>Date:&#9;</run>
                 <run bold='true'>&lt;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[attr:period_label:nk]&gt;</run>
                 <run fontcolor='#787878'>&#10;Replies to Healthy Liquid Listings:&#9;</run>
-                <run bold='true'>&lt;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:Calculation_1210419134024264:qk]&gt;</run>
+                <run bold='true'>&lt;[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:replies_to_healthy_liquid:qk]&gt;</run>
               </formatted-text>
             </customized-tooltip>
             <style>
@@ -15570,7 +15551,7 @@
             </style>
           </pane>
         </panes>
-        <rows>([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_liquid_listers:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_listers:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:lister_liquidity:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_net_new_listings:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:Calculation_1210419134024264:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_replies:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:avg_replies_per_buyer:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_buyers:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_active_users:qk] + [redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:buyside_conversion:qk])))))))))</rows>
+        <rows>([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_liquid_listers:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_listers:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:lister_liquidity:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_net_new_listings:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:replies_to_healthy_liquid:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_replies:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:avg_replies_per_buyer:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_buyers:qk] + ([redshift.0pmlpog0qxywzw13ap5j21d5qj19].[sum:no_active_users:qk] + [redshift.0pmlpog0qxywzw13ap5j21d5qj19].[avg:buyside_conversion:qk])))))))))</rows>
         <cols>[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[none:eop_dt:qk]</cols>
       </table>
     </worksheet>
@@ -24563,13 +24544,12 @@
       </viewpoints>
       <active id='250' />
     </window>
-    <window class='worksheet' name='4. HD.1a Labels'>
+    <window class='worksheet' maximized='true' name='4. HD.1a Labels'>
       <cards>
         <edge name='left'>
           <strip size='199'>
             <card type='pages' />
             <card type='filters' />
-            <card type='marks' />
             <card type='measures' />
           </strip>
         </edge>
@@ -24579,6 +24559,11 @@
           </strip>
           <strip size='2147483647'>
             <card type='rows' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card type='marks' />
           </strip>
         </edge>
       </cards>
@@ -24643,10 +24628,10 @@
       <cards>
         <edge name='left'>
           <strip size='216'>
-            <card type='pages' />
-            <card type='filters' />
-            <card type='measures' />
-            <card pane-specification-id='0' param='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[Multiple Values]' type='color' />
+            <card size='39' type='pages' />
+            <card size='154' type='filters' />
+            <card size='264' type='measures' />
+            <card pane-specification-id='0' param='[redshift.0pmlpog0qxywzw13ap5j21d5qj19].[Multiple Values]' size='36' type='color' />
           </strip>
         </edge>
         <edge name='top'>
@@ -25158,7 +25143,7 @@
       </viewpoints>
       <active id='260' />
     </window>
-    <window class='worksheet' maximized='true' name='6.1 Trend'>
+    <window class='worksheet' name='6.1 Trend'>
       <cards>
         <edge name='left'>
           <strip size='240'>
@@ -29597,141 +29582,143 @@
     </thumbnail>
     <thumbnail height='192' name='4. HD.2 Bars' width='192'>
       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
-      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
+      AAAEX0lEQVR4nO3dXWtcVRTH4T1v6TS0hNomRWyxgnfF7/8RCkLvWoSoBZFCMCDRpLVM5sU7
+      wStZofscOf/nuQ+si/nNrJNzZs/scDgcGoSajz0AjOmfAA6HQ/NhQJp/BXBzc/Off3B5edl1
+      IBiSFYhoAiBaOYDZbNZjDhhFOYDVatVjDhiFFYhoy7v80eGw/9xzwCjKAbzZvGrXF1c9ZoHB
+      WYGIJgCiCYBoAiCaAIgmAKIJgGjl+wBni+ft6fpZj1lgcHcI4Fk7eXjSYxYYXHkFur297TEH
+      jKIcgK9NMiUugokmAKIJgGgCIJoAiFYO4OjoqMccMAqfAEQTANHKAWy32x5zwCjKAez3ToRg
+      OsoPw71fnrfzy9c9ZoHBlQP4sL1u11vHojANLoKJJgCiCYBoAiCaAIgmAKKV/w36xdFZu784
+      7jELDK4cwJPN83Z6etpjFhicFYhoAiCaAIgmAKIJgGh+J5hofimeaFYgopUD2O12PeaAUQiA
+      aFYgogmAaOWH4a7WF+3i6l2PWWBw5QB++/TeqRBMhhWIaAIgmgCIJgCiCYBoAiBa+d+gR/N1
+      uze/32MWGFw5gBf7l+30qVMhmAYrENEEQDQBEK0cwHJZvmyA/61yAPO5Dw2mw6uZaH4mlWh+
+      KJtoViCiCYBoAiCaAIhWvqu1ffCx/fLhvMcsMLhyAO9ufnAqBJNhBSKaAIgmAKIJgGgCIJoA
+      iCYAopXvA3yz/649PnvcYxYYXDmA1fyo3Vuse8wCg/OVSKL5UjzRvJ0TTQBEKwew2Wx6zAGj
+      8AlANAEQTQBEEwDRBEA0d4KJVn41P2qzHnPAKOqfAB//6jEHjMI+QzQBEE0ARBMA0QRANAEQ
+      rR7AQjNMR/nVfLnylUimw9s50QRANAEQrRzAarXqMQeMohzAbOZpUKbDCkS0cgC73a7HHDAK
+      ARDNCkQ0ARBNAEQTANHKT7btHnxqv378qccsMLhyAD/fvG3X26ses8DgrEBEEwDRBEA0ARBN
+      AEQTANEEQLTyfYCv9y/bk7PHPWaBwZUDuDdft/XiuMcsMLjyCrRcOheI6fATSUTzaiZaOYD9
+      ft9jDhhFOYDtdttjDhiFFYhoAiCaAIgmAKIJgGjlABaLRY85YBTl5xrmx639sfm9xywwuHIA
+      b6+/dyoEk+EagGgCIJoAiCYAogmAaAIgmgCIVr4P8HT7on376GGPWWBw5QBOj79sJ+uTHrPA
+      4KxARBMA0coBbDabHnPAKHwCEE0ARBMA0QRANAEQzeG4RHM8OtG8nRPtTm/nh8Phc88BoygH
+      8Gbzql1fOBWCabACEU0ARBMA0QRANAEQTQBEEwDRyvcBzhbP2tn6qx6zwODuEMDzdvLQqRBM
+      Q3kFur297TEHjKIcgOeAmBIXwUQTANEEQDQBEK0cwGw26zEHjKIcwGq16jEHjMIKRDQBEM2d
+      YKK5E0y08sNw75c/tvPL1z1mgcGVA/iw/bNdbx2LwjS4CCaaAIgmAKL9DXdyo04UbXb3AAAA
+      AElFTkSuQmCC
     </thumbnail>
     <thumbnail height='192' name='4. HD.3 DeltaValues' width='64'>
       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
-      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
+      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
       QmCC
     </thumbnail>
     <thumbnail height='192' name='4. HD.4 Trend' width='192'>
       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
-      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
+      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
+      AABJRU5ErkJggg==
     </thumbnail>
     <thumbnail height='192' name='5.1 Revenue Driver View' width='192'>
       iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7EAAAOxAGVKw4b
